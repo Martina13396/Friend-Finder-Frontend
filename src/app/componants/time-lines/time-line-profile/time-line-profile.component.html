@@ -1,0 +1,63 @@
+<div class="timeline-cover"
+     [ngStyle]="{'background-image': 'url(assets/images/' + (userData?.backGroundPictureUrl || 'covers/1.jpg') + ')'}">
+
+  <div class="timeline-nav-bar hidden-sm hidden-xs">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="profile-info">
+          <img [src]="userData?.profilePictureUrl ? 'assets/images/' + userData.profilePictureUrl : 'assets/images/users/user-1.jpg'"
+               alt="profile-pic"
+               class="img-responsive profile-photo">
+
+          <h3>{{ userData?.name }}</h3>
+          <p class="text-muted">{{ userData?.job || 'No Job Specified' }}</p>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <ul class="list-inline profile-menu">
+          <li><a [routerLink]="userData?.email ? ['/timeline', userData.email] : ['/timeline']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Timeline</a></li>
+          <li><a [routerLink]="userData?.id ? ['/timeline-about', userData.email] : ['/timeline-about']" routerLinkActive="active">About</a></li>
+          <li><a [routerLink]="userData?.id ? ['/timeline-album', userData.email] : ['/timeline-album']" routerLinkActive="active">Album</a></li>
+          <li><a [routerLink]="userData?.id ? ['/timeline-friends', userData.email] : ['/timeline-friends']" routerLinkActive="active">Friends</a></li>
+          <li><a [routerLink]="userData?.id ? ['/timeline-details', userData.email] : ['/timeline-details']" routerLinkActive="active">Activity Log</a></li>
+        </ul>
+        <ul class="follow-me list-inline">
+          <li>{{ userData?.followersCount || 0 | number }} people following</li>
+          <li *ngIf="userData && !isOwnProfile()">
+            <button [ngClass]="isRequested(userData.id) ? 'btn-danger' : 'btn-primary'"
+                    (click)="isRequested(userData.id) ? deleteRequest(getReqId(userData.id)) : addFriend(userData.id)"
+                    [disabled]="currentLoadingId === userData.id">
+
+              <ng-container *ngIf="currentLoadingId === userData.id; else buttonText">
+                {{ messageEn }}
+              </ng-container>
+
+              <ng-template #buttonText>
+                {{ isRequested(userData.id) ? 'Cancel Request' : 'Add Friend' }}
+              </ng-template>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="navbar-mobile hidden-lg hidden-md">
+    <div class="profile-info">
+      <img [src]="userData?.profilePictureUrl ? 'assets/images/' + userData.profilePictureUrl : 'assets/images/users/user-1.jpg'"
+           alt="" class="img-responsive profile-photo">
+      <h4>{{ userData?.name }}</h4>
+      <p class="text-muted">{{ userData?.job }}</p>
+    </div>
+    <div class="mobile-menu">
+      <ul class="list-inline">
+        <li><a [routerLink]="['/timeline', userData?.email]" class="active">Timeline</a></li>
+        <li><a [routerLink]="['/timeline-about', userData?.email]">About</a></li>
+        <li><a [routerLink]="['/timeline-album', userData?.email]">Album</a></li>
+        <li><a [routerLink]="['/timeline-friends', userData?.email]">Friends</a></li>
+        <li><a [routerLink]="['/timeline-details', userData?.email]">Activity log</a></li>
+
+      </ul>
+    </div>
+  </div>
+</div>

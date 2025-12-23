@@ -1,0 +1,53 @@
+<div class="col-md-3" style="position:static;">
+  <div class="profile-card" [style.background-image]="'url(assets/images/' + userData?.backGroundPictureUrl + ')'">
+    <img [src]="'assets/images/' + userData?.profilePictureUrl" alt="user" class="profile-photo" />
+    <h5>
+      <a [routerLink]="['/timeline', userEmail]" class="text-white hand-cursor">{{userData?.name}}</a>
+    </h5>
+    <a [routerLink]="['/all-friends']" class="text-white hand-cursor">
+      <i class="ion ion-android-person-add"></i> {{userData?.followersCount || 0}} followers
+    </a>
+  </div>
+
+  <ul class="nav-news-feed" style="list-style: none; padding: 20px 0;">
+
+    <li class="nav-item-flex">
+      <i class="icon ion-ios-paper blue-icon"></i>
+      <div>
+        <a href="/newsfeed" class="hand-cursor">My Newsfeed</a>
+      </div>
+    </li>
+
+    <li class="nav-item-flex">
+      <i class="icon ion-ios-people-outline"></i>
+      <div><a [routerLink]="['/all-friends']" class="hand-cursor">Friends</a></div>
+    </li>
+
+    <li class="nav-item-flex">
+      <i class="icon ion-images"></i>
+      <div><a [routerLink]="['/album' , 'IMAGE']" class="hand-cursor">Images</a></div>
+    </li>
+
+    <li class="nav-item-flex">
+      <i class="icon ion-ios-videocam"></i>
+      <div><a [routerLink]="['/album','VIDEO']" class="hand-cursor">Videos</a></div>
+    </li>
+  </ul>
+
+  <div id="chat-block">
+    <div class="title">Chat online</div>
+    <ul class="online-users list-inline">
+      <li *ngFor="let friend of friendList">
+        <a [routerLink]="['/timeline', friend.email]" [title]="friend.name" class="hand-cursor">
+          <img [src]="resolveImageUrl(friend.profilePictureUrl, 'user')"
+               alt="user"
+               class="img-responsive profile-photo" />
+          <span class="online-dot"></span>
+        </a>
+      </li>
+      <li *ngIf="friendList.length === 0" class="text-muted small" style="padding-left: 10px;">
+        No friends online
+      </li>
+    </ul>
+  </div>
+</div>

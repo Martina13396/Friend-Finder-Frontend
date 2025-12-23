@@ -1,0 +1,42 @@
+<div class="container timeline-container">
+  <app-time-line-profile [userData]="userData"></app-time-line-profile>
+
+  <div id="page-contents" style="margin-top: 140px !important; padding-bottom: 50px;">
+    <div class="row">
+      <div class="col-md-10 col-md-offset-1">
+
+        <div class="activity-log-wrapper card" style="background: #fff; padding: 25px; border-radius: 10px; border: 1px solid #e6e6e6; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+
+          <h4 class="grey" style="margin-bottom: 20px;">
+            <i class="icon ion-ios-list-outline" style="color: #27aae1; font-size: 22px; margin-right: 8px;"></i>
+            {{ userData?.id === authService.getAccountId() ? 'My Activity Log' : userData?.name + "'s Activity Log" }}
+          </h4>
+
+          <div class="line-divider" style="height: 1px; background: #eee; margin-bottom: 20px;"></div>
+
+          <div class="feed-item" *ngFor="let act of actions" style="border-bottom: 1px solid #f8f9fb; padding: 15px 5px; transition: background 0.2s;">
+            <div class="live-activity" style="display: flex; justify-content: space-between; align-items: center;">
+              <p style="margin: 0; font-size: 14px; color: #333;">
+                <a [routerLink]="['/timeline', userData?.email]" class="profile-link" style="font-weight: bold; color: #27aae1; text-decoration: none;">
+                  {{ act.accountName }}
+                </a>
+                <span style="color: #555;"> {{ act.action }}</span>
+              </p>
+              <div style="text-align: right;">
+                <span class="text-muted" style="font-size: 11px; display: block; color: #999;">
+                  <i class="fa fa-clock-o"></i> {{ act.timeAgo }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="actions?.length === 0" class="text-center" style="padding: 60px 0;">
+            <i class="icon ion-ios-paper-outline" style="font-size: 50px; color: #ccc;"></i>
+            <p class="text-muted" style="margin-top: 10px;">No activities recorded yet for this user.</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

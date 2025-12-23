@@ -1,0 +1,17 @@
+
+.notification {
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.notification.ar {
+  background-color: #ffd6d6;
+  color: #d8000c;
+}
+
+.notification.en {
+  background-color: #d6e0ff;
+  color: #0033cc;
+}

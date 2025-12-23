@@ -1,0 +1,66 @@
+
+<div class="create-post">
+
+  <div class="row">
+
+
+    <div class="col-md-7 col-sm-7">
+      <div class="form-group">
+        <img [src]="'assets/images/'+ currentAccount?.profilePictureUrl " ] alt="" class="profile-photo-md"/>
+
+        <textarea [(ngModel)]="newPost.content"
+                  class="form-control"
+                  rows="1"
+                  placeholder="Write what you wish">
+        </textarea>
+      </div>
+    </div>
+
+
+    <div class="col-md-5 col-sm-5">
+      <div class="tools">
+        <ul class="publishing-tools list-inline">
+
+          <li>
+            <label style="cursor:pointer;">
+              <i class="ion-images"></i>
+              <input type="file" accept="image/*"
+                     (change)="onFileSelected($event)"
+                     hidden>
+            </label>
+          </li>
+
+          <li>
+            <label style="cursor:pointer;">
+              <i class="ion-ios-videocam"></i>
+              <input type="file" accept="video/*"
+                     (change)="onFileSelected($event)"
+                     hidden>
+            </label>
+          </li>
+
+        </ul>
+
+        <button class="btn btn-primary pull-right"
+                (click)="publishPost()">
+          Publish
+        </button>
+      </div>
+    </div>
+  </div>
+
+
+  <div *ngIf="selectedFile" class="alert alert-info mt-2">
+    Selected: {{ selectedFile?.name }}
+  </div>
+
+
+  <div *ngIf="previewUrl">
+    <img [src]="previewUrl" class="img-responsive" style="max-width:200px; margin-top:10px;" alt="">
+  </div>
+
+
+  <div *ngIf="messageAr" class="alert alert-success mt-2">{{ messageAr }}</div>
+  <div *ngIf="messageEn" class="alert alert-success mt-2">{{ messageEn }}</div>
+
+</div>

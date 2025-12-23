@@ -1,0 +1,25 @@
+.follow-me button {
+  background: #27aae1;
+  padding: 5px 15px;
+  border: none;
+  font-weight: 600;
+  border-radius: 20px;
+  color: #fff;
+  transition: 0.5s;
+}
+
+.follow-me button:hover {
+  background: #1496bb;
+}
+
+.follow-me button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+.btn-danger {
+  background-color: #fb4343 !important;
+  border: none;
+  color: white;
+  padding: 5px 15px;
+  border-radius: 20px;
+}

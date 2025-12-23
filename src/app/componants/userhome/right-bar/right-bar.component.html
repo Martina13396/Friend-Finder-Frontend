@@ -1,0 +1,33 @@
+<div class="suggestions" id="sticky-sidebar">
+  <h4 class="grey">Who to Follow</h4>
+
+  <div class="follow-user" *ngFor="let user of friendRequest">
+    <a [routerLink]="['/timeline', user.email]" class="user-img-link">
+      <img [src]="resolveImageUrl(user.profilePictureUrl)"
+           alt="user"
+           class="profile-photo-sm" />
+    </a>
+
+    <div class="user-info">
+      <h5>
+        <a [routerLink]="['/timeline', user.email]">{{ user.name }}</a>
+      </h5>
+
+      <button
+        class="btn-friend-request"
+        [class.loading]="currentLoadingId === user.id"
+        [disabled]="currentLoadingId === user.id"
+        (click)="addFriend(user.id)">
+
+        <span *ngIf="currentLoadingId !== user.id">Add friend</span>
+
+        <div *ngIf="currentLoadingId === user.id" class="btn-messages">
+          <span class="btn-msg-en">{{ messageEn }}</span>
+          <span class="btn-msg-ar">{{ messageAr }}</span>
+        </div>
+      </button>
+
+    </div> </div> <div *ngIf="friendRequest?.length === 0" class="no-suggestions">
+  <p class="text-muted">No suggestions found</p>
+</div>
+</div>

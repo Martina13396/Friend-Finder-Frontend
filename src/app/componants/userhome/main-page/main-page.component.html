@@ -1,0 +1,73 @@
+<div id="page-contents">
+  <div class="container">
+    <app-left-bar></app-left-bar>
+
+    <div class="col-md-6">
+      <app-publish></app-publish>
+
+      <div class="post-content" *ngFor="let post of posts">
+        <div class="post-container">
+          <div class="post-header-flex">
+            <img [src]="resolveImageUrl(post.accountProfilePicture, 'user', post.accountId)" class="profile-photo-md" />
+            <div class="user-info-wrapper">
+              <div class="name-time-wrapper">
+                <h5>
+                  <a [routerLink]="['/timeline', post.accountEmail]" class="profile-link">
+                    {{ post.accountName }}
+                  </a>
+                </h5>
+                <p class="text-muted">Published about {{ post.timeAgo }}</p>
+              </div>
+              <span *ngIf="post.accountId===accountId" class="delete-post-link" (click)="deletePost(post.id)">[Delete Post]</span>
+            </div>
+          </div>
+
+          <div class="post-detail">
+            <div class="post-text">
+              <p>{{ post.content }}</p>
+            </div>
+
+            <ng-container *ngIf="post.mediaUrl">
+              <img *ngIf="post.mediaType === 'image'" [src]="resolveImageUrl(post.mediaUrl, 'post' ,post.accountId)" class="img-responsive post-image" />
+              <video *ngIf="post.mediaType === 'video'" [src]="resolveImageUrl(post.mediaUrl, 'post' , post.accountId)" class="post-video" controls></video>
+            </ng-container>
+
+            <div class="line-divider"></div>
+
+            <div class="post-reactions">
+              <button (click)="toggleReact('LIKE',post.id)">👍 <span>{{ post.reactCounts ? (post.reactCounts['LIKE'] || 0) : 0 }}</span></button>
+              <button (click)="toggleReact('LOVE',post.id)">❤️ <span>{{ post.reactCounts ? (post.reactCounts['LOVE'] || 0) : 0 }}</span></button>
+              <button (click)="toggleReact('HAHA',post.id)">😂 <span>{{ post.reactCounts ? (post.reactCounts['HAHA'] || 0) : 0 }}</span></button>
+              <button (click)="toggleReact('WOW',post.id)">😮 <span>{{ post.reactCounts ? (post.reactCounts['WOW'] || 0) : 0 }}</span></button>
+              <button (click)="toggleReact('SAD',post.id)">😢 <span>{{ post.reactCounts ? (post.reactCounts['SAD'] || 0) : 0 }}</span></button>
+              <button (click)="toggleReact('ANGRY',post.id)">😡 <span>{{ post.reactCounts ? (post.reactCounts['ANGRY'] || 0) : 0 }}</span></button>
+            </div>
+
+            <div class="line-divider"></div>
+
+            <div class="comments">
+              <a *ngIf="post.comments === undefined" (click)="loadComments(post)" class="view-comments">View Comments...</a>
+              <p *ngIf="post.comments?.length === 0" class="no-comments">No comments to show</p>
+
+              <div class="post-comment" *ngFor="let comment of post.comments">
+                <img [src]="resolveImageUrl(comment.profilePictureUrl, 'user')" class="profile-photo-sm" />
+                <div class="comment-text-bubble">
+                  <a [routerLink]="['/timeline', comment.email]" class="profile-link" style="font-weight: bold;">
+                    {{ comment.accountName }}
+                  </a>
+                  <p>{{ comment.text }}</p>
+                  <span *ngIf="accountId && (accountId===comment.accountId || accountId===post.accountId)" class="delete-comment-btn" (click)="deleteComment(comment.id, post)">[Delete]</span>
+                </div>
+              </div>
+
+              <div *ngIf="post.comments!==undefined" class="post-comment add-comment-area">
+                <img [src]="resolveImageUrl(currentUserProfilePicture, 'user', accountId)" class="profile-photo-sm" />
+                <input type="text" [(ngModel)]="newCommentText" class="form-control" placeholder="Post a comment" (keyup.enter)="addComment(post)">
+              </div>
+            </div>
+          </div> </div> </div> <div *ngIf="messageAr" class="alert alert-success mt-2">{{ messageAr }}</div>
+      <div *ngIf="messageEn" class="alert alert-success mt-2">{{ messageEn }}</div>
+    </div> <div class="col-md-3">
+    <app-right-bar></app-right-bar>
+  </div>
+  </div> </div>

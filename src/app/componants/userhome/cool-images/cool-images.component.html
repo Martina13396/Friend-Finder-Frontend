@@ -1,0 +1,35 @@
+<div class="page-full-reset">
+  <div class="columns-tight-wrapper">
+
+    <aside class="side-left-standard-slim">
+      <div class="sticky-container">
+        <app-left-bar class="super-stretch"></app-left-bar>
+      </div>
+    </aside>
+
+    <main class="content-middle-album-max">
+      <app-publish ></app-publish>
+
+      <div class="tiny-title-label">
+        <i [className]="mediaType === 'IMAGE' ? 'ion-images' : 'ion-ios-videocam'"></i>
+        {{ mediaType === 'IMAGE' ? 'My Photos' : 'My Videos' }}
+      </div>
+
+      <div class="compact-grid">
+        <div class="grid-box" *ngFor="let url of mediaList; let i = index">
+          <div class="media-frame">
+            <img *ngIf="mediaType === 'IMAGE'" [src]="url" class="full-view-img">
+            <video *ngIf="mediaType === 'VIDEO'" [src]="url" controls class="full-view-img"></video>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <aside class="side-right-slim">
+      <div class="sticky-container">
+        <app-right-bar></app-right-bar>
+      </div>
+    </aside>
+
+  </div>
+</div>

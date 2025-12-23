@@ -1,0 +1,66 @@
+<div class="container">
+  <div class="timeline">
+    <app-time-line-profile [userData]="userData"></app-time-line-profile>
+
+    <div id="page-contents">
+      <div class="row">
+        <div class="col-md-3"></div>
+
+        <div class="col-md-7">
+          <ul class="album-photos">
+            <li *ngFor="let item of mediaList; let i = index">
+
+              <div class="img-wrapper" data-toggle="modal" [attr.data-target]="'#photo-' + i">
+
+                <img *ngIf="item.type?.toLowerCase() === 'image'"
+                     [src]="resolveAlbumUrl(
+                        item.url,
+                        (item.url?.includes('users/') ? 'user' : item.url?.includes('covers/') ? 'cover' : 'post'),
+                        accountId
+                     )"
+                     alt="photo">
+
+                <div *ngIf="item.type?.toLowerCase() === 'video'" class="video-preview-wrapper">
+                  <video [src]="resolveAlbumUrl(item.url, 'post', accountId)" class="video-thumb"></video>
+                  <div class="play-icon-overlay">
+                    <i class="ion-play"></i>
+                  </div>
+                </div>
+              </div>
+
+              <div class="modal fade" [id]="'photo-' + i" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                  <div class="modal-content">
+                    <div class="modal-body p-0 border-0">
+
+                      <img *ngIf="item.type?.toLowerCase() === 'image'"
+                           [src]="resolveAlbumUrl(
+                              item.url,
+                              (item.url?.includes('users/') ? 'user' : item.url?.includes('covers/') ? 'cover' : 'post'),
+                              accountId
+                           )"
+                           class="img-fluid w-100" alt="full-photo">
+
+                      <video *ngIf="item.type?.toLowerCase() === 'video'"
+                             [src]="resolveAlbumUrl(item.url, 'post', accountId)"
+                             controls class="w-100"></video>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </li>
+          </ul>
+
+          <div *ngIf="mediaList?.length === 0" class="text-center mt-5 no-media">
+            <i class="ion-images" style="font-size: 50px; color: #ccc;"></i>
+            <p class="text-muted">No photos or videos to show in this album.</p>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>

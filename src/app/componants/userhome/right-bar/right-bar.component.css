@@ -1,0 +1,67 @@
+#sticky-sidebar {
+  position: sticky;
+  top: 450px;
+  z-index: 100;
+  width: 100%;
+  max-width: 280px;
+  height: fit-content;
+  margin-top: 190px;
+}
+.suggestions {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+
+.follow-user {
+  display: flex;
+  margin-bottom: 20px;
+  align-items: flex-start;
+}
+
+.user-info {
+  margin-left: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.user-info h5 {
+  margin: 0 0 5px 0;
+  font-size: 14px;
+}
+
+/* تنسيق الزرار والرسالة */
+.btn-friend-request {
+  background: transparent;
+  border: none;
+  color: #8dc63f;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+  width: auto;
+}
+
+
+.btn-messages {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.3;
+  color: #27aae1;
+}
+
+.btn-msg-en {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.btn-msg-ar {
+  font-size: 11px;
+  direction: rtl;
+  text-align: left;
+}

@@ -1,0 +1,113 @@
+
+.post-content {
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid #e6e6e6;
+  margin-bottom: 20px;
+  padding: 15px;
+}
+
+
+.post-header-flex {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.profile-photo-md {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 12px;
+}
+
+.user-info-wrapper {
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 1;
+  align-items: center;
+}
+
+.name-time-wrapper h5 {
+  margin: 0;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.name-time-wrapper p {
+  margin: 0;
+  font-size: 11px;
+}
+
+.post-reactions {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 6px !important;
+  padding: 10px 0 !important;
+}
+
+.post-reactions button {
+  background: #f0f2f5 !important;
+  border: none !important;
+  padding: 4px 8px !important;
+  border-radius: 15px !important;
+  font-size: 12px !important;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: background 0.2s;
+}
+
+.post-reactions button span {
+  margin-left: 4px;
+  font-weight: 600;
+  color: #65676b;
+}
+
+.post-reactions button:hover {
+  background: #e4e6eb !important;
+}
+
+.post-comment {
+  display: flex;
+  margin-top: 10px;
+}
+
+.comment-text-bubble {
+  background: #f0f2f5;
+  padding: 8px 12px;
+  border-radius: 15px;
+  margin-left: 8px;
+  flex: 1;
+}
+
+.comment-text-bubble p {
+  margin: 2px 0;
+  font-size: 13px;
+}
+
+.delete-comment-btn {
+  font-size: 10px;
+  color: #e74c3c;
+  cursor: pointer;
+}
+
+/* الإدخال */
+.add-comment-area input {
+  border-radius: 20px !important;
+  margin-left: 8px;
+  background: #f0f2f5;
+  border: none !important;
+}
+
+.line-divider {
+  height: 1px;
+  background: #eee;
+  margin: 10px 0;
+}
+
+.delete-post-link {
+  color: #e74c3c;
+  font-size: 12px;
+  cursor: pointer;
+}

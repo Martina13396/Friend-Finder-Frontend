@@ -1,0 +1,43 @@
+<header id="header">
+  <nav class="navbar navbar-default navbar-fixed-top menu">
+    <div class="container">
+
+
+      <div class="navbar-header">
+        <a class="navbar-brand" routerLink="/">
+          <img src="assets/images/logo.png" alt="logo" />
+        </a>
+      </div>
+
+
+      <div class="collapse navbar-collapse" id="navbar-menu">
+
+
+        <ul class="nav navbar-nav navbar-right main-menu" *ngIf="isUserLogin()">
+          <li><a routerLink="/mainpage">Home</a></li>
+          <li><a routerLink="/timeline">Timeline</a></li>
+          <li style="position: relative;">
+            <a routerLink="/friend-requests" title="Friend Requests">
+              <i class="fa fa-users"></i>
+              <span *ngIf="incomingCount > 0" class="badge-notification">{{ incomingCount }}</span>
+            </a>
+          <li><a routerLink="/contact">Contact</a></li>
+          <li><a href="#" (click)="logout()">Logout</a></li>
+        </ul>
+
+
+        <ul class="nav navbar-nav navbar-right main-menu" *ngIf="!isUserLogin()">
+          <li><a routerLink="/login" class="btn btn-primary" style="margin-right:10px;">Login</a></li>
+          <li><a routerLink="/sign-up" class="btn btn-success">Sign Up</a></li>
+        </ul>
+        <form class="navbar-form navbar-right hidden-sm">
+          <div class="form-group">
+            <i class="icon ion-android-search"></i>
+            <input type="text" class="form-control" placeholder="Search friends, photos, videos"
+            (input)="onSearch($event)">
+          </div>
+        </form>
+      </div>
+    </div>
+  </nav>
+</header>

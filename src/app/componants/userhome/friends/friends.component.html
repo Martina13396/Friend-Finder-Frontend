@@ -1,0 +1,52 @@
+<div id="page-contents">
+  <div class="container">
+    <div class="row">
+
+      <app-left-bar></app-left-bar>
+
+      <div class="col-md-7">
+
+        <app-publish></app-publish>
+
+        <div class="friend-list-container" style="margin-top: 20px;">
+          <div class="row">
+
+            <div class="col-md-6 col-sm-6" *ngFor="let friend of friends">
+              <div class="friend-card" style="margin-bottom: 25px; background: #fff; border: 1px solid #ddd; border-radius: 8px; overflow: visible; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+
+                <img [src]="resolveImageUrl(friend['backGroundPictureUrl'], 'cover')"
+                     class="img-responsive cover"
+                     style="height: 110px; width: 100%; object-fit: cover; border-top-left-radius: 8px; border-top-right-radius: 8px;" />
+
+                <div class="card-info" style="padding: 12px; display: flex; align-items: flex-start;">
+                  <img [src]="resolveImageUrl(friend['profilePictureUrl'], 'user')"
+                       class="profile-photo-lg"
+                       style="width: 65px; height: 65px; border-radius: 50%; margin-top: -40px; border: 3px solid #fff; background: #fff; object-fit: cover;" />
+
+                  <div class="friend-info" style="margin-left: 12px; flex: 1; padding-top: 2px;">
+                    <span class="pull-right text-green" style="font-size: 11px; font-weight: bold;">Friend</span>
+                    <h5 style="margin: 0;">
+                      <a [routerLink]="['/timeline', friend['email']]"
+                         style="font-weight: bold; color: #27aae1; text-decoration: none;">
+                        {{ friend['name'] }}
+                      </a>
+                    </h5>
+                    <p class="text-muted" style="font-size: 13px; margin-top: 4px;">{{ friend['job'] || 'Student' }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div *ngIf="friends?.length === 0" class="col-md-12 text-center" style="padding: 40px;">
+              <p class="text-muted">No friends found.</p>
+            </div>
+
+          </div>
+        </div>
+      </div> <div class="col-md-2 static">
+      <app-right-bar></app-right-bar>
+    </div>
+
+    </div>
+  </div>
+</div>

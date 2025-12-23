@@ -1,0 +1,118 @@
+<div class="container" *ngIf="accountDetails">
+  <div class="timeline">
+
+    <app-time-line-profile [userData]="userData"></app-time-line-profile>
+
+    <div id="page-contents" style="margin-top: 140px !important; padding-bottom: 50px;">
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+
+          <div class="about-profile" style="background: #fff; padding: 25px; border-radius: 10px; border: 1px solid #e6e6e6; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+
+            <div class="about-content-block">
+              <h4 class="grey"><i class="ion-ios-information-outline icon-in-title" style="font-size: 25px; vertical-align: middle; margin-right: 10px; color: #27aae1;"></i>Personal Information</h4>
+              <textarea *ngIf="userData?.email === authService.getEmail()" class="form-control" [(ngModel)]="accountDetails.personalInfo" rows="3" placeholder="Tell us more about yourself..."></textarea>
+            </div>
+
+            <div class="about-content-block" style="margin-top: 40px;">
+              <h4 class="grey">
+                <i class="ion-ios-briefcase-outline icon-in-title" style="font-size: 25px; vertical-align: middle; margin-right: 10px; color: #27aae1;"></i>Work Experiences
+                <button *ngIf="userData?.email === authService.getEmail()" class="btn btn-success btn-sm pull-right" (click)="addWorkExperience()">+ Add Experience</button>
+              </h4>
+
+              <div class="organization" *ngFor="let work of accountDetails.workExperiences; let i = index" style="margin-bottom: 25px; border-bottom: 1px solid #f1f1f1; padding-bottom: 20px;">
+                <div class="row">
+                  <div class="col-md-2 text-center">
+                    <img [src]="work.companyLogo || 'assets/images/envato.png'" alt="logo" class="img-org" style="width: 55px; height: 55px; border-radius: 8px; margin-bottom: 8px; border: 1px solid #eee;">
+                    <input *ngIf="userData?.email === authService.getEmail()" type="text" class="form-control input-sm" [(ngModel)]="work.companyLogo" placeholder="Logo URL" style="font-size: 10px;">
+                  </div>
+
+                  <div class="col-md-10">
+                    <div class="row">
+                      <div class="col-md-6 mb-2">
+                        <label><small>Company Name</small></label>
+                        <input *ngIf="userData?.email === authService.getEmail()" type="text" class="form-control" [(ngModel)]="work.companyName">
+                      </div>
+                      <div class="col-md-6 mb-2">
+                        <label><small>Job Title</small></label>
+                        <input *ngIf="userData?.email === authService.getEmail()"type="text" class="form-control" [(ngModel)]="work.title">
+                      </div>
+                    </div>
+
+                    <div class="row" style="margin-top: 10px;">
+                      <div class="col-md-4">
+                        <label><small>Start Date</small></label>
+                        <input *ngIf="userData?.email === authService.getEmail()" type="date" class="form-control" [(ngModel)]="work.startDate">
+                      </div>
+                      <div class="col-md-4">
+                        <label><small>End Date</small></label>
+                        <input *ngIf="userData?.email === authService.getEmail()" type="date" class="form-control" [(ngModel)]="work.endDate" [disabled]="work.present">
+                      </div>
+                      <div class="col-md-4" style="padding-top: 30px;">
+                        <input *ngIf="userData?.email === authService.getEmail()" type="checkbox" [(ngModel)]="work.present"> <small style="font-weight: 600;">Currently Work Here</small>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <p *ngIf="accountDetails.workExperiences?.length === 0" class="text-muted">No work experiences listed.</p>
+            </div>
+
+            <div class="about-content-block" style="margin-top: 40px;">
+              <h4 class="grey"><i class="ion-ios-location-outline icon-in-title" style="font-size: 25px; vertical-align: middle; margin-right: 10px; color: #27aae1;"></i>Location</h4>
+              <input *ngIf="userData?.email === authService.getEmail()" type="text" class="form-control mb-3" [(ngModel)]="accountDetails.location" placeholder="Enter city or country">
+
+              <div class="google-maps" *ngIf="accountDetails.location" style="margin-top: 15px; border: 2px solid #f1f1f1; border-radius: 10px; overflow: hidden;">
+                <iframe [src]="getMapUrl(accountDetails.location)" width="100%" height="300" frameborder="0" style="border:0"></iframe>
+              </div>
+            </div>
+
+            <div class="about-content-block" style="margin-top: 40px;">
+              <h4 class="grey">
+                <i class="ion-ios-heart-outline icon-in-title" style="font-size: 25px; vertical-align: middle; margin-right: 10px; color: #27aae1;"></i>Interests
+                <button *ngIf="userData?.email === authService.getEmail()" class="btn btn-success btn-sm pull-right" (click)="addFavorite()">+ Add Interest</button>
+              </h4>
+              <div class="row">
+                <div class="col-md-4 mb-3" *ngFor="let fav of accountDetails?.favorites">
+                  <div class="input-group">
+                    <span class="input-group-addon" style="background: #f9f9f9;"><i class="icon ion-android-star" style="color: #f1c40f;"></i></span>
+                    <input *ngIf="userData?.email === authService.getEmail()" type="text" class="form-control" [(ngModel)]="fav.favorite" placeholder="Interest name">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="about-content-block" style="margin-top: 40px;">
+              <h4 class="grey">
+                <i class="ion-ios-chatbubble-outline icon-in-title" style="font-size: 25px; vertical-align: middle; margin-right: 10px; color: #27aae1;"></i>Languages
+                <button *ngIf="!route.snapshot.paramMap.get('email')" class="btn btn-success btn-sm pull-right" (click)="addLanguage()">+ Add Language</button>
+              </h4>
+              <div class="row mb-3" *ngFor="let lang of accountDetails.languages">
+                <div class="col-md-6">
+                  <input *ngIf="userData?.email === authService.getEmail()" type="text" class="form-control" [(ngModel)]="lang.language" placeholder="Language">
+                </div>
+                <div class="col-md-6">
+                  <select *ngIf="userData?.email === authService.getEmail()" class="form-control" [(ngModel)]="lang.level">
+                    <option value="Beginner">Beginner</option>
+                    <option value="Intermediate">Intermediate</option>
+                    <option value="Expert">Expert</option>
+                    <option value="Native">Native</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="row" style="margin-top: 40px;">
+              <div class="col-md-12">
+                <hr style="border-top: 2px solid #f8f8f8;">
+                <button *ngIf="userData?.email === authService.getEmail()" class="btn btn-primary btn-lg pull-right" (click)="updateAccountDetails(accountDetails)">
+                  Save All Changes
+                </button>
+                <div *ngIf="messageEn" class="alert alert-success mt-2" style="display: inline-block; padding: 10px 20px;">
+                  <i class="fa fa-check-circle"></i> {{ messageEn }}
+                </div>
+              </div>
+            </div>
+
+          </div> </div> </div> </div> </div> </div> ```
+

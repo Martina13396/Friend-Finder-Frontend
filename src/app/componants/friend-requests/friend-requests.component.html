@@ -1,0 +1,89 @@
+<div class="container friend-requests-container">
+  <div class="row">
+
+    <div class="col-md-4">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h5><i class="fa fa-user-plus"></i> Incoming Requests ({{incomingRequests.length}})</h5>
+        </div>
+        <div class="card-body scrollable-list">
+          <div *ngFor="let req of incomingRequests" class="request-item">
+            <div class="user-meta">
+
+                <img [src]="'assets/images/' + req.sender.profilePictureUrl" class="avatar" style="cursor: pointer;">
+
+              <div class="user-details">
+                <h6>
+                  <a [routerLink]="['/timeline', req.sender.email]" class="text-decoration-none text-dark fw-bold">
+                    {{req.sender.name}}
+                  </a>
+                </h6>
+                <small class="time text-muted"><i class="fa fa-clock-o"></i> {{req.timeAgo}}</small>
+              </div>
+            </div>
+            <div class="action-buttons">
+              <button class="btn btn-success btn-sm" (click)="accept(req.id)">Accept</button>
+              <button class="btn btn-outline-danger btn-sm" (click)="deleteRequest(req.id)">Reject</button>
+            </div>
+          </div>
+          <div *ngIf="incomingRequests.length === 0" class="empty-state">No new requests</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card shadow-sm">
+        <div class="card-header bg-warning text-dark">
+          <h5><i class="fa fa-paper-plane"></i> Sent Requests</h5>
+        </div>
+        <div class="card-body scrollable-list">
+          <div *ngFor="let req of sentRequests" class="request-item">
+            <div class="user-meta">
+
+                <img [src]="'assets/images/' + req.receiver.profilePictureUrl" class="avatar" style="cursor: pointer;">
+
+              <div class="user-details">
+                <h6>
+                  <a [routerLink]="['/timeline', req.receiver.email]" class="text-decoration-none text-dark fw-bold">
+                    {{req.receiver.name}}
+                  </a>
+                </h6>
+                <small class="text-muted">Waiting for response...</small>
+              </div>
+            </div>
+            <button class="btn btn-light btn-sm text-danger" (click)="deleteRequest(req.id)">Cancel</button>
+          </div>
+          <div *ngIf="sentRequests.length === 0" class="empty-state">No pending sent requests</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="card shadow-sm border-success">
+        <div class="card-header bg-success text-white">
+          <h5><i class="fa fa-bell"></i> Notifications</h5>
+        </div>
+        <div class="card-body scrollable-list">
+          <div *ngFor="let note of acceptedRequests" class="request-item notification-item">
+            <div class="user-meta">
+
+                <img [src]="'assets/images/' + note.receiver.profilePictureUrl" class="avatar" style="cursor: pointer;">
+
+              <div class="user-details">
+                <p class="mb-0">
+                  <a [routerLink]="['/timeline', note.receiver.email]" class="text-decoration-none text-dark">
+                    <strong>{{note.receiver.name}}</strong>
+                  </a>
+                  accepted your friend request.
+                </p>
+                <small class="time"><i class="fa fa-check-circle"></i> {{note.timeAgo}}</small>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="acceptedRequests.length === 0" class="empty-state">No recent notifications</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,83 @@
+<div class="container timeline-container">
+  <app-time-line-profile [userData]="accountData"></app-time-line-profile>
+
+  <div class="row page-contents">
+    <div class="col-md-8 col-md-offset-2">
+
+      <div class="create-post" [class.hide.publish]="accountData?.id !== loggedInUserId">
+        <app-publish></app-publish>
+      </div>
+      <div *ngIf="posts?.length === 0" class="no-posts-container">
+        <div class="no-posts-card">
+          <div class="icon-circle"><span>📝</span></div>
+
+          <ng-container *ngIf="accountData?.id === loggedInUserId">
+            <h4>No Posts Yet</h4>
+            <p>Your timeline looks a bit empty. Why not start the conversation and publish a post?</p>
+          </ng-container>
+
+          <ng-container *ngIf="accountData?.id !== loggedInUserId">
+            <h4>No Posts To Show</h4>
+            <p>{{ accountData?.name }} hasn't posted anything yet.</p>
+          </ng-container>
+        </div>
+      </div>
+
+      <div class="post-list">
+        <div *ngFor="let post of posts" class="post-card">
+
+          <div class="post-header">
+            <img [src]="resolveImageUrl(post.accountProfilePicture,'user',post.accountId)" class="profile-photo-md">
+            <div class="post-header-info">
+              <div class="header-top">
+                <h5>{{ post.accountName }}</h5>
+                <span class="delete-btn" *ngIf="post.accountId == loggedInUserId" (click)="deletePost(post.id)">Delete</span>
+              </div>
+              <span class="publish-time">Published about {{ post.timeAgo }}</span>
+            </div>
+          </div>
+
+          <p class="post-text">{{ post.content }}</p>
+
+          <div class="post-media" *ngIf="post.mediaUrl">
+            <img *ngIf="post.mediaType === 'image'" [src]="resolveImageUrl(post.mediaUrl,'post',post.accountId)">
+            <video *ngIf="post.mediaType === 'video'" controls [src]="resolveImageUrl(post.mediaUrl,'post',post.accountId)"></video>
+          </div>
+
+          <div class="post-reactions">
+            <a (click)="toggleReact('LIKE',post.id)">👍 {{post.reactCounts['LIKE']||0}}</a>
+            <a (click)="toggleReact('LOVE',post.id)">❤️ {{post.reactCounts['LOVE']||0}}</a>
+            <a (click)="toggleReact('HAHA',post.id)">😂 {{post.reactCounts['HAHA']||0}}</a>
+            <a (click)="toggleReact('WOW',post.id)">😮 {{post.reactCounts['WOW']||0}}</a>
+            <a (click)="toggleReact('SAD',post.id)">😢 {{post.reactCounts['SAD']||0}}</a>
+            <a (click)="toggleReact('ANGRY',post.id)">😡 {{post.reactCounts['ANGRY']||0}}</a>
+          </div>
+
+          <div class="comments-section">
+            <div style="cursor: pointer !important;">
+              <a (click)="loadComments(post)" style="cursor: pointer !important;"> View Comments... </a>
+            </div>
+            <p *ngIf="post.comments?.length === 0" class="no-comments">No comments yet. Be the first to comment!</p>
+
+            <div *ngFor="let comment of post.comments" class="comment-item">
+              <img [src]="resolveImageUrl(comment.profilePictureUrl,'user',comment.accountId)" class="comment-photo">
+              <div class="comment-container">
+                <div class="comment-bubble">
+                  <a [routerLink]="['/timeline', comment.email]"><strong style="color: #27aae1;">{{ comment.accountName }}</strong></a>
+                  <p>{{ comment.text }}</p>
+                </div>
+                <div class="comment-actions" *ngIf="loggedInUserId && (loggedInUserId == comment.accountId || loggedInUserId == post.accountId)">
+                  <span class="delete-link" (click)="deleteComment(comment.id, post)">Delete</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="add-comment-box">
+              <img [src]="resolveImageUrl(currentUserProfilePicture,'user',loggedInUserId)" class="comment-photo">
+              <div class="input-wrapper">
+                <input *ngIf="post.comments!==undefined" type="text" [(ngModel)]="newCommentText" placeholder="Write a comment..." (keyup.enter)="addComment(post)">
+              </div>
+            </div>
+          </div> </div> </div> </div>
+  </div>
+</div>
