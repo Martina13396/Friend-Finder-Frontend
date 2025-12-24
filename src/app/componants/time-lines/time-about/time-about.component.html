@@ -85,7 +85,7 @@
             <div class="about-content-block" style="margin-top: 40px;">
               <h4 class="grey">
                 <i class="ion-ios-chatbubble-outline icon-in-title" style="font-size: 25px; vertical-align: middle; margin-right: 10px; color: #27aae1;"></i>Languages
-                <button *ngIf="!route.snapshot.paramMap.get('email')" class="btn btn-success btn-sm pull-right" (click)="addLanguage()">+ Add Language</button>
+                <button *ngIf="userData?.email === authService.getEmail()"  class="btn btn-success btn-sm pull-right" (click)="addLanguage()">+ Add Language</button>
               </h4>
               <div class="row mb-3" *ngFor="let lang of accountDetails.languages">
                 <div class="col-md-6">
