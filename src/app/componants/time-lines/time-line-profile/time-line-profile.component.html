@@ -24,18 +24,17 @@
         <ul class="follow-me list-inline">
           <li>{{ userData?.followersCount || 0 | number }} people following</li>
           <li *ngIf="userData && !isOwnProfile()">
-            <button [ngClass]="isRequested(userData.id) ? 'btn-danger' : 'btn-primary'"
-                    (click)="isRequested(userData.id) ? deleteRequest(getReqId(userData.id)) : addFriend(userData.id)"
-                    [disabled]="currentLoadingId === userData.id">
-
-              <ng-container *ngIf="currentLoadingId === userData.id; else buttonText">
-                {{ messageEn }}
-              </ng-container>
-
-              <ng-template #buttonText>
-                {{ isRequested(userData.id) ? 'Cancel Request' : 'Add Friend' }}
-              </ng-template>
+            <button *ngIf="isAlreadyFriend(userData.id)" class="btn-friends" disabled>
+              <i class="ion-checkmark"></i> Friends
             </button>
+
+            <ng-container *ngIf="!isAlreadyFriend(userData.id)">
+              <button [ngClass]="isRequested(userData.id) ? 'btn-danger' : 'btn-primary'"
+                      (click)="isRequested(userData.id) ? deleteRequest(getReqId(userData.id)) : addFriend(userData.id)"
+                      [disabled]="currentLoadingId === userData.id">
+                {{ currentLoadingId === userData.id ? messageEn : (isRequested(userData.id) ? 'Cancel Request' : 'Add Friend') }}
+              </button>
+            </ng-container>
           </li>
         </ul>
       </div>

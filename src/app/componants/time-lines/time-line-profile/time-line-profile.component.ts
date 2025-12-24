@@ -29,6 +29,7 @@ export class TimeLineProfileComponent implements OnInit {
   currentUserId:number;
 
   accountId:number;
+  acceptedFriends: Account[] = [];
 
   currentLoadingId: number | null = null;
   messageAr = '';
@@ -40,8 +41,44 @@ export class TimeLineProfileComponent implements OnInit {
   ngOnInit(): void {
 
     this.currentUserId = this.authService.getAccountId();
+    const loggedInEmail = this.authService.getEmail();
+    this.getFriendsForcurrentAccount();
     this.loadSentRequests();
+    this.activatedRoute.paramMap.subscribe(
+       params => {
+         const emailByUrl = params.get('email');
+         if (!emailByUrl || emailByUrl === loggedInEmail) {
+           this.accountService.getAccountByEmail(loggedInEmail).subscribe(
+           account=>{
+             this.accountId = this.currentUserId;
+             this.userData = account;
 
+
+             }
+           );
+         }else {
+           this.accountService.getAccountByEmail(emailByUrl).subscribe(
+             account=>{
+               this.userData = account;
+               this.accountId = account.id;
+
+
+             }
+           );
+         }
+       }
+     );
+
+
+
+
+  }
+
+  loadAcceptedFriends(): void {
+
+  }
+  isAlreadyFriend(userId: number): boolean {
+    return this.acceptedFriends.some(f => f.id === userId);
   }
 
   loadSentRequests(): void {
@@ -50,13 +87,18 @@ export class TimeLineProfileComponent implements OnInit {
     });
   }
   addFriend(receiverId: number): void {
+    if (!receiverId) {
+      console.error('No receiver ID found!');
+      return;
+    }
     this.currentLoadingId = receiverId;
     this.messageEn = 'Sending...';
     this.messageAr = 'جاري الإرسال...';
     this.friendRequestService.sendFriendRequest(receiverId).subscribe(
 
       response => {
-        this.sentRequests.push(response);
+        this.sentRequests = [...this.sentRequests, response];
+
         this.messageEn = 'sent!';
         this.messageAr = 'تم الارسال!';
         setTimeout(() => {
@@ -99,5 +141,13 @@ export class TimeLineProfileComponent implements OnInit {
   }
   isOwnProfile(): boolean {
     return this.userData && this.currentUserId === this.userData.id;
+  }
+
+  getFriendsForcurrentAccount(){
+    this.friendRequestService.getFriendsForUser().subscribe(
+      friends => {
+        this.acceptedFriends = friends;
+      }
+    );
   }
 }
